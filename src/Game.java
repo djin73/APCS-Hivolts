@@ -1,3 +1,4 @@
+package src;
 import java.util.ArrayList;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -32,7 +33,7 @@ public class Game extends JPanel{
 		g.fillRect(0, 0, 600, 600);
 		BufferedImage img = null;
 		try {
-		    img = ImageIO.read(new File("rsz_test.jpg"));
+		    img = ImageIO.read(new File("images/rsz_test.jpg"));
 		} catch (IOException e) {
 		}
 		for(int y = 0; y < 12; y++){

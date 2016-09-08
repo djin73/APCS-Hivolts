@@ -1,3 +1,4 @@
+package src;
 public class Board{
 	public Tile [][] board = new Tile [12][12];
 	public Board(){
