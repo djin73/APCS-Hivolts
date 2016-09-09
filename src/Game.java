@@ -1,12 +1,6 @@
 package src;
 import java.util.ArrayList;
 import java.util.Random;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 public class Game extends JPanel{
@@ -31,32 +25,32 @@ public class Game extends JPanel{
 	}
 	public void initBoard(){
 		Random r = new Random();
-		for(int y = 0; y < 12; y++){
-			for(int x = 0; x < 12; x++){
+		for(int x = 0; x < 12; x++){
+			for(int y = 0; y < 12; y++){
 				if(x==0||x==11||y==0||y==11){
-					board[y][x] = new Fence(x, y);
+					board[x][y] = new Fence(x, y);
 				}
 				else{
-					board[y][x] = new Tile();
+					board[x][y] = new Tile();
 				}
 			}
 		}
 		for(int i = 0; i < 20; i++){
 			int x = r.nextInt(11);
 			int y = r.nextInt(11);
-			while(board[y][x] instanceof Fence){
+			while(board[x][y] instanceof Fence){
 				 x = r.nextInt(11);
 				 y = r.nextInt(11);
 			}
-			board[y][x] = new Fence(x, y);
+			board[x][y] = new Fence(x, y);
 		}
 	}
 	public void paint(Graphics g){
 		g.fillRect(0, 0, 600, 600);
 		for(int y = 0; y < 12; y++){
 			for(int x = 0; x < 12; x++){
-				if(board[y][x] instanceof Fence){
-					board[y][x].draw(g);
+				if(board[x][y] instanceof Fence){
+					board[x][y].draw(g);
 				}
 			}
 		}
