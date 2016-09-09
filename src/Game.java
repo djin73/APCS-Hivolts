@@ -34,7 +34,7 @@ public class Game extends JPanel{
 		for(int y = 0; y < 12; y++){
 			for(int x = 0; x < 12; x++){
 				if(x==0||x==11||y==0||y==11){
-					board[y][x] = new Fence();
+					board[y][x] = new Fence(x, y);
 				}
 				else{
 					board[y][x] = new Tile();
@@ -48,20 +48,15 @@ public class Game extends JPanel{
 				 x = r.nextInt(11);
 				 y = r.nextInt(11);
 			}
-			board[y][x] = new Fence();
+			board[y][x] = new Fence(x, y);
 		}
 	}
 	public void paint(Graphics g){
 		g.fillRect(0, 0, 600, 600);
-		BufferedImage img = null;
-		try {
-		    img = ImageIO.read(new File("images/rsz_test.jpg"));
-		} catch (IOException e) {
-		}
 		for(int y = 0; y < 12; y++){
 			for(int x = 0; x < 12; x++){
 				if(board[y][x] instanceof Fence){
-					g.drawImage(img, x*50, y*50, null);
+					board[y][x].draw(g);
 				}
 			}
 		}
