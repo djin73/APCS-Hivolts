@@ -18,6 +18,40 @@ public class Game extends JPanel{
 		j.setVisible(true);
 	}
 	public Game(){
+		KeyListener listener = new KeyListener(){
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int xVel = 0, yVel = 0;
+				switch(e.getKeyChar()){
+				case 'w': yVel=-1; break;
+				case 'a': xVel=-1; break;
+				case 's': break;
+				case 'd': xVel=1; break;
+				case 'q': yVel=-1; xVel=-1; break;
+				case 'e': yVel=-1; xVel=1; break;
+				case 'z': yVel=1; xVel=-1; break;
+				case 'c': yVel=1; xVel=1; break;
+				case 'x': yVel=1; break;
+				}
+				if(!(board[p.x+xVel][p.y+yVel] instanceof Fence)){
+					p.x += xVel;
+					p.y += yVel;
+				}
+				repaint();
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+			}
+		};
+		addKeyListener(listener);
+		setFocusable(true);
 		init();
 		repaint();
 	}
@@ -59,7 +93,7 @@ public class Game extends JPanel{
 		p = new Player(x, y);
 		board[x][y] = p;
 	}
-	public void paint(Graphics g){
+	public void paintComponent(Graphics g){
 		g.fillRect(0, 0, 600, 600);
 		for(int y = 0; y < 12; y++){
 			for(int x = 0; x < 12; x++){
