@@ -1,12 +1,16 @@
 package src;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 public class Game extends JPanel{
 	Player p;
 	ArrayList<Mho> Mhos = new ArrayList<Mho>();
@@ -53,9 +57,12 @@ public class Game extends JPanel{
 			}
 		};
 		addKeyListener(listener);
+		this.setLayout(null);
 		ImageIcon i = new ImageIcon("images/button.png");
 		JButton b2 = new JButton("Start", i);
 		JButton b1 = new JButton("Quit", i);
+		b2.setBounds(240, 300, 160, 75);
+		b1.setBounds(240, 400, 160, 75);
 		b2.setVerticalTextPosition(AbstractButton.CENTER);
 		b2.setHorizontalTextPosition(AbstractButton.CENTER); 
 		b1.setVerticalTextPosition(AbstractButton.CENTER);
@@ -129,7 +136,18 @@ public class Game extends JPanel{
 		board[x][y] = p;
 	}
 	public void paintComponent(Graphics g){
-		if(gameState.equals("game")){
+		if(gameState.equals("StartMenu")){
+			g.fillRect(0, 0, 620, 640);
+			Image i;
+			try{
+				// image from http://homepage.cs.uiowa.edu/~jones/plato/
+				i = ImageIO.read(new File("images/hivolts1.png"));
+				g.drawImage(i, 0, 0, 620, 600, null);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		else if(gameState.equals("game")){
 			g.fillRect(0, 0, 600, 600);
 			for(int y = 0; y < 12; y++){
 				for(int x = 0; x < 12; x++){
