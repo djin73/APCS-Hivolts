@@ -3,12 +3,15 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 public class Game extends JPanel{
 	Player p;
 	ArrayList<Mho> Mhos = new ArrayList<Mho>();
 	Tile [][] board = new Tile[12][12];
+	String gameState = "StartMenu";
 	public static void main(String [] args){
 		Game g = new Game();
 		JFrame j = new JFrame();
@@ -44,13 +47,45 @@ public class Game extends JPanel{
 				repaint();
 				
 			}
-
 			@Override
 			public void keyReleased(KeyEvent e) {
 				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
 			}
 		};
 		addKeyListener(listener);
+		ImageIcon i = new ImageIcon("images/button.png");
+		JButton b2 = new JButton("Start", i);
+		JButton b1 = new JButton("Quit", i);
+		b2.setVerticalTextPosition(AbstractButton.CENTER);
+		b2.setHorizontalTextPosition(AbstractButton.CENTER); 
+		b1.setVerticalTextPosition(AbstractButton.CENTER);
+	    b1.setHorizontalTextPosition(AbstractButton.CENTER); 
+		b1.setActionCommand("quit");
+		b2.setActionCommand("start");
+		b1.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals("quit")){
+					System.exit(0);
+				}
+			}
+		});
+		b2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals("start")){
+					gameState = "game";
+					repaint();
+					b2.setVisible(false);
+					b1.setVisible(false);
+				}
+				
+			}
+			
+		});
+		this.add(b2);
+		this.add(b1);
 		setFocusable(true);
 		init();
 		repaint();
@@ -94,10 +129,12 @@ public class Game extends JPanel{
 		board[x][y] = p;
 	}
 	public void paintComponent(Graphics g){
-		g.fillRect(0, 0, 600, 600);
-		for(int y = 0; y < 12; y++){
-			for(int x = 0; x < 12; x++){
-				board[x][y].draw(g);
+		if(gameState.equals("game")){
+			g.fillRect(0, 0, 600, 600);
+			for(int y = 0; y < 12; y++){
+				for(int x = 0; x < 12; x++){
+					board[x][y].draw(g);
+				}
 			}
 		}
 	}
