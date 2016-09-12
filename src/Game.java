@@ -23,40 +23,9 @@ public class Game extends JPanel{
 		j.add(g);
 		j.setDefaultCloseOperation(j.EXIT_ON_CLOSE);
 		j.setVisible(true);
+		j.setLocationRelativeTo(null);
 	}
 	public Game(){
-		KeyListener listener = new KeyListener(){
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int xVel = 0, yVel = 0;
-				switch(e.getKeyChar()){
-				case 'w': yVel=-1; break;
-				case 'a': xVel=-1; break;
-				case 's': break;
-				case 'd': xVel=1; break;
-				case 'q': yVel=-1; xVel=-1; break;
-				case 'e': yVel=-1; xVel=1; break;
-				case 'z': yVel=1; xVel=-1; break;
-				case 'c': yVel=1; xVel=1; break;
-				case 'x': yVel=1; break;
-				}
-				if(!(board[p.x+xVel][p.y+yVel] instanceof Fence)){
-					p.x += xVel;
-					p.y += yVel;
-				}
-				repaint();
-				
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
-			}
-		};
-		addKeyListener(listener);
 		this.setLayout(null);
 		ImageIcon i = new ImageIcon("images/button.png");
 		JButton b2 = new JButton("Start", i);
@@ -83,6 +52,7 @@ public class Game extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				if(e.getActionCommand().equals("start")){
 					gameState = "game";
+					init();
 					repaint();
 					b2.setVisible(false);
 					b1.setVisible(false);
@@ -93,8 +63,45 @@ public class Game extends JPanel{
 		});
 		this.add(b2);
 		this.add(b1);
+		KeyListener listener = new KeyListener(){
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int xVel = 0, yVel = 0;
+				switch(e.getKeyChar()){
+				case 'w': yVel=-1; break;
+				case 'a': xVel=-1; break;
+				case 's': break;
+				case 'd': xVel=1; break;
+				case 'q': yVel=-1; xVel=-1; break;
+				case 'e': yVel=-1; xVel=1; break;
+				case 'z': yVel=1; xVel=-1; break;
+				case 'c': yVel=1; xVel=1; break;
+				case 'x': yVel=1; break;
+				}
+				if(!(board[p.x+xVel][p.y+yVel] instanceof Fence)){
+					p.x += xVel;
+					p.y += yVel;
+				}
+				else{
+					gameState = "gameOver_Lost";
+					b1.setVisible(true);
+					b2.setText("Play Again");
+					b2.setVisible(true);
+				}
+				repaint();
+				
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+			}
+		};
+		addKeyListener(listener);
 		setFocusable(true);
-		init();
 		repaint();
 	}
 	public void init(){
@@ -154,6 +161,12 @@ public class Game extends JPanel{
 					board[x][y].draw(g);
 				}
 			}
+		}
+		else if(gameState.equals("gameOver_Lost")){
+			g.fillRect(0, 0, 620, 640);
+			g.setFont(new Font("SansSerif", 12, 48));
+			g.setColor(Color.WHITE);
+			g.drawString("YOU LOST!", 200, 200);
 		}
 	}
 	
