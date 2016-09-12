@@ -27,11 +27,12 @@ public class Game extends JPanel{
 	}
 	public Game(){
 		this.setLayout(null);
-		ImageIcon i = new ImageIcon("images/button.png");
-		JButton b2 = new JButton("Start", i);
-		JButton b1 = new JButton("Quit", i);
+		JButton b2 = new JButton("Start");
+		JButton b1 = new JButton("Quit");
 		b2.setBounds(240, 300, 160, 75);
 		b1.setBounds(240, 400, 160, 75);
+		b1.setBackground(Color.GRAY);
+		b2.setBackground(Color.GRAY);
 		b2.setVerticalTextPosition(AbstractButton.CENTER);
 		b2.setHorizontalTextPosition(AbstractButton.CENTER); 
 		b1.setVerticalTextPosition(AbstractButton.CENTER);
