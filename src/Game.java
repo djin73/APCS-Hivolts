@@ -81,6 +81,7 @@ public class Game extends JPanel{
 				case 'z': yVel=1; xVel=-1; break;
 				case 'c': yVel=1; xVel=1; break;
 				case 'x': yVel=1; break;
+				case 'j': jump();
 				}
 				if(!(board[p.x+xVel][p.y+yVel] instanceof Fence)){
 					p.x += xVel;
@@ -108,6 +109,17 @@ public class Game extends JPanel{
 		setSize(620, 640);
 		initBoard();
 		initPlayer();
+	}
+	public void jump(){
+		Random r = new Random();
+		int x = r.nextInt(11);
+		int y = r.nextInt(11);
+		while(board[x][y] instanceof Fence){
+			x = r.nextInt(11);
+			y = r.nextInt(11);
+		}
+		p.x = x;
+		p.y = y;
 	}
 	public void initBoard(){
 		Random r = new Random();
@@ -144,6 +156,7 @@ public class Game extends JPanel{
 	}
 	public void paintComponent(Graphics g){
 		if(gameState.equals("StartMenu")){
+			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, 620, 640);
 			Image i;
 			try{
