@@ -1,7 +1,5 @@
 package src;
-import java.util.ArrayList;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 public class Game extends JPanel{
 	Player p;
-	ArrayList<Mho> Mhos = new ArrayList<Mho>();
+	Mho [] Mhos = new Mho[12];
 	Tile [][] board = new Tile[12][12];
 	String gameState = "StartMenu";
 	public static void main(String [] args){
@@ -52,7 +50,7 @@ public class Game extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(e.getActionCommand().equals("start")){
-					gameState = "game";
+					gameState = "Game";
 					init();
 					repaint();
 					b2.setVisible(false);
@@ -84,12 +82,14 @@ public class Game extends JPanel{
 				case 'x': yVel=1; break;
 				case 'j': jump();
 				}
-				if(!(board[p.x+xVel][p.y+yVel] instanceof Fence)){
+				if(!(board[p.x+xVel][p.y+yVel] instanceof Fence)&&(!(board[p.x+xVel][p.y+yVel] instanceof Mho))){
 					p.x += xVel;
 					p.y += yVel;
+					board[p.x-xVel][p.y-yVel] = new Tile();
+					board[p.x][p.y] = p;
 				}
 				else{
-					gameState = "gameOver_Lost";
+					gameState = "Lost";
 					b1.setVisible(true);
 					b2.setText("Play Again");
 					b2.setVisible(true);
@@ -99,7 +99,6 @@ public class Game extends JPanel{
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
-				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
 			}
 		};
 		addKeyListener(listener);
@@ -161,14 +160,14 @@ public class Game extends JPanel{
 			g.fillRect(0, 0, 620, 640);
 			Image i;
 			try{
-				// image from http://homepage.cs.uiowa.edu/~jones/plato/
+				//image from http://homepage.cs.uiowa.edu/~jones/plato/
 				i = ImageIO.read(new File("images/hivolts1.png"));
 				g.drawImage(i, 0, 0, 620, 600, null);
 			}catch(IOException e){
 				e.printStackTrace();
 			}
 		}
-		else if(gameState.equals("game")){
+		else if(gameState.equals("Game")){
 			g.fillRect(0, 0, 600, 600);
 			for(int y = 0; y < 12; y++){
 				for(int x = 0; x < 12; x++){
@@ -176,7 +175,7 @@ public class Game extends JPanel{
 				}
 			}
 		}
-		else if(gameState.equals("gameOver_Lost")){
+		else if(gameState.equals("Lost")){
 			g.fillRect(0, 0, 620, 640);
 			g.setFont(new Font("SansSerif", 12, 48));
 			g.setColor(Color.WHITE);
