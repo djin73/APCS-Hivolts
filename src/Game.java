@@ -395,7 +395,7 @@ public class Game extends JPanel {
 	}
 	/**
 	 * Method used to display the game in the JFrame. First determines what the state of the game is based off of gameState,
-	 * then draws to the JFrame accordingly.
+	 * then draws to the JFrame accordingly
 	 */
 	public void paintComponent(Graphics g) {
 		if (gameState.equals("StartMenu")) {
