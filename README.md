@@ -19,9 +19,13 @@ Major Challenges:
 
 Acknowledgements:
     We would like to thank online resources such as StackOverflow and the Oracle Java documentation for help in the syntax for writing our KeyListener.  We would also like to thank the following websites for the use of images for our game:
+    
 Player.png: http://cliparting.com/wp-content/uploads/2016/06/Happy-face-smiley-face-emotions-clip-art-images-image-7.jpg
+
 Mho Image: http://vector.me/browse/388266/scary_face
+
 Fence:https://www.iconfinder.com/icons/1242583/fence_garden_house_nature_outdoor_wood_yard_icon#size=128
+
 Hivolts Title: http://homepage.cs.uiowa.edu/~jones/plato/
 
 
