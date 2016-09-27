@@ -28,12 +28,11 @@ public class Game extends JPanel {
 		j.setDefaultCloseOperation(j.EXIT_ON_CLOSE);
 		j.setVisible(true);
 		j.setLocationRelativeTo(null);
+		j.setResizable(false);
 	}
 
 	public Game() {
 		this.setLayout(null);
-	//	final JButton b2 = new JButton("Start");
-	//	final JButton b1 = new JButton("Quit");
 		b2.setBounds(240, 300, 160, 75);
 		b1.setBounds(240, 400, 160, 75);
 		b1.setBackground(Color.GRAY);
