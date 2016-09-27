@@ -52,7 +52,7 @@ public class Game extends JPanel {
 		instructionsButton.setVerticalTextPosition(AbstractButton.CENTER);
 		instructionsButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		instructionsButton.setActionCommand("instructions");
-		backButton.setBounds(240, 400, 160, 75);
+		backButton.setBounds(240, 500, 160, 75);
 		backButton.setBackground(Color.GRAY);
 		backButton.setVerticalTextPosition(AbstractButton.CENTER);
 		backButton.setHorizontalTextPosition(AbstractButton.CENTER);
@@ -456,6 +456,40 @@ public class Game extends JPanel {
 			}
 		} else if(gameState.equals("instructions")){
 			g.fillRect(0, 0, 650, 650);
+			g.setFont(new Font("SansSerif", 12, 48));
+			g.setColor(Color.WHITE);
+			g.drawString("HOW TO PLAY", 150, 50);
+			g.setFont(new Font("SansSerif", 12, 36));
+			// display all the movement keys
+			g.drawString("MOVEMENT", 25, 100);
+			g.setFont(new Font("SansSerif", 12, 22));
+			g.drawString("Q: UP AND LEFT", 25, 125);
+			g.drawString("W: UP", 25, 150);
+			g.drawString("E: UP AND RIGHT", 25, 175);
+			g.drawString("A: LEFT", 25, 200);
+			g.drawString("D: RIGHT", 25, 225);
+			g.drawString("Z: DOWN AND LEFT", 25, 250);
+			g.drawString("X: DOWN", 25, 275);
+			g.drawString("C: DOWN AND RIGHT", 25, 300);
+			g.drawString("S: SIT (STAY ON THE SAME SQUARE)", 25, 325);
+			g.drawString("J: JUMP (MOVE ONTO A RANDOM SQUARE)", 25, 350);
+			g.drawString("NOTE: A JUMP CAN'T LAND YOU ON A FENCE", 100, 400);
+			g.drawString("BUT CAN LAND YOU ON AN MHO!", 150, 425);
+			//tell the player the basic goals/rules of the game
+			g.drawString(" = YOU", 350, 100);
+			g.drawString("AVOID THE MHOS:", 300, 150);
+			g.drawString("DON'T STEP ON FENCES:", 300, 200);
+			Image mho, fence, player;
+			try {
+				fence =  ImageIO.read(new File("images/fence.png"));
+				mho = ImageIO.read(new File("images/mho.png"));
+				player = ImageIO.read(new File("images/player.png"));
+				g.drawImage(mho, 500, 125, 50, 50, null);
+				g.drawImage(player, 300, 70, 50, 50, null);
+				g.drawImage(fence, 555, 170, 50, 50, null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else if (gameState.equals("Game")) {
 			g.fillRect(0, 0, 650, 650);
 			for (int y = 0; y < 12; y++) {
