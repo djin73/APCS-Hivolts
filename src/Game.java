@@ -17,8 +17,10 @@ public class Game extends JPanel {
 	Tile[][] board = new Tile[12][12];
 	String gameState = "StartMenu";
 	
-	JButton b2 = new JButton("Start");
-	JButton b1 = new JButton("Quit");
+	JButton startButton = new JButton("Start");
+	JButton quitButton = new JButton("Quit");
+	JButton instructionsButton = new JButton("Instructions");
+	JButton backButton = new JButton("Back");
 
 	public static void main(String[] args) {
 		Game g = new Game();
@@ -35,17 +37,28 @@ public class Game extends JPanel {
 	 */
 	public Game() {
 		this.setLayout(null);
-		b2.setBounds(240, 300, 160, 75);
-		b1.setBounds(240, 400, 160, 75);
-		b1.setBackground(Color.GRAY);
-		b2.setBackground(Color.GRAY);
-		b2.setVerticalTextPosition(AbstractButton.CENTER);
-		b2.setHorizontalTextPosition(AbstractButton.CENTER);
-		b1.setVerticalTextPosition(AbstractButton.CENTER);
-		b1.setHorizontalTextPosition(AbstractButton.CENTER);
-		b1.setActionCommand("quit");
-		b2.setActionCommand("start");
-		b1.addActionListener(new ActionListener() {
+		startButton.setBounds(240, 300, 160, 75);
+		quitButton.setBounds(240, 400, 160, 75);
+		quitButton.setBackground(Color.GRAY);
+		startButton.setBackground(Color.GRAY);
+		startButton.setVerticalTextPosition(AbstractButton.CENTER);
+		startButton.setHorizontalTextPosition(AbstractButton.CENTER);
+		quitButton.setVerticalTextPosition(AbstractButton.CENTER);
+		quitButton.setHorizontalTextPosition(AbstractButton.CENTER);
+		quitButton.setActionCommand("quit");
+		startButton.setActionCommand("start");
+		instructionsButton.setBounds(240, 500, 160, 75);
+		instructionsButton.setBackground(Color.GRAY);
+		instructionsButton.setVerticalTextPosition(AbstractButton.CENTER);
+		instructionsButton.setHorizontalTextPosition(AbstractButton.CENTER);
+		instructionsButton.setActionCommand("instructions");
+		backButton.setBounds(240, 400, 160, 75);
+		backButton.setBackground(Color.GRAY);
+		backButton.setVerticalTextPosition(AbstractButton.CENTER);
+		backButton.setHorizontalTextPosition(AbstractButton.CENTER);
+		backButton.setActionCommand("back");
+		backButton.setVisible(false);
+		quitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equals("quit")) {
@@ -53,7 +66,7 @@ public class Game extends JPanel {
 				}
 			}
 		});
-		b2.addActionListener(new ActionListener() {
+		startButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -61,15 +74,47 @@ public class Game extends JPanel {
 					gameState = "Game";
 					init();
 					repaint();
-					b2.setVisible(false);
-					b1.setVisible(false);
+					startButton.setVisible(false);
+					quitButton.setVisible(false);
+					instructionsButton.setVisible(false);
+					backButton.setVisible(false);
 				}
 
 			}
 
 		});
-		this.add(b2);
-		this.add(b1);
+		instructionsButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals("instructions")){
+					gameState = "instructions";
+					backButton.setVisible(true);
+					instructionsButton.setVisible(false);
+					quitButton.setVisible(false);
+					startButton.setVisible(false);
+					repaint();
+				}
+				
+		}});
+		backButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals("back")){
+					gameState = "StartMenu";
+					backButton.setVisible(false);
+					instructionsButton.setVisible(true);
+					quitButton.setVisible(true);
+					startButton.setVisible(true);
+					repaint();
+				}
+				
+		}});
+		this.add(startButton);
+		this.add(quitButton);
+		this.add(instructionsButton);
+		this.add(backButton);
 		KeyListener listener = new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -390,9 +435,9 @@ public class Game extends JPanel {
 		}else{
 			gameState = "Lost";
 		}
-		b1.setVisible(true);
-		b2.setText("Play Again");
-		b2.setVisible(true);
+		quitButton.setVisible(true);
+		startButton.setText("Play Again");
+		startButton.setVisible(true);
 	}
 	/**
 	 * Method used to display the game in the JFrame. First determines what the state of the game is based off of gameState,
@@ -409,8 +454,10 @@ public class Game extends JPanel {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else if(gameState.equals("instructions")){
+			g.fillRect(0, 0, 650, 650);
 		} else if (gameState.equals("Game")) {
-			g.fillRect(0, 0, 600, 600);
+			g.fillRect(0, 0, 650, 650);
 			for (int y = 0; y < 12; y++) {
 				for (int x = 0; x < 12; x++) {
 					board[x][y].draw(g);
