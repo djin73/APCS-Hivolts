@@ -30,7 +30,9 @@ public class Game extends JPanel {
 		j.setLocationRelativeTo(null);
 		j.setResizable(false);
 	}
-
+	/**
+	 * Game constructor. Sets up the buttons and ActionListeners, and also sets up the KeyListener used to get the player input.
+	 */
 	public Game() {
 		this.setLayout(null);
 		b2.setBounds(240, 300, 160, 75);
@@ -138,13 +140,17 @@ public class Game extends JPanel {
 		setFocusable(true);
 		repaint();
 	}
-
+	/**
+	 * Initializes the board(Fences and Mhos) and also the player 
+	 */
 	public void init() {
 		setSize(620, 640);
 		initBoard();
 		initPlayer();
 	}
-
+	/**
+	 * Moves the player to a random location on the board. Can't be a fence, but can be an Mho.
+	 */
 	public void jump() {
 		Random r = new Random();
 		int x = r.nextInt(11);
@@ -156,7 +162,10 @@ public class Game extends JPanel {
 		p.x = x;
 		p.y = y;
 	}
-
+	/**
+	 * Initializes the fences on the board and the mhos. The fences are around the edge of the board, 
+	 * with some randomly generated in the middle, and the Mhos are randomly generated on the board.
+	 */
 	public void initBoard() {
 		Random r = new Random();
 		for (int x = 0; x < 12; x++) {
@@ -189,6 +198,10 @@ public class Game extends JPanel {
 		}
 
 	}
+	/**
+	 * Determines whether or not all the Mhos are dead. Used to see if the player has won the game or not.
+	 * @return true if all the Mhos are dead, false otherwise
+	 */
 	public boolean allMhosDead(){
 		for(int i = 0; i < 12; i++){
 			if(Mhos[i].isAlive){
@@ -197,6 +210,10 @@ public class Game extends JPanel {
 		}
 		return true;
 	}
+	
+	/**
+	 * Initializes the Player to a random location on the board. The location cannot be an Mho or a Fence.
+	 */
 	public void initPlayer() {
 		Random r = new Random();
 		int x = r.nextInt(11);
@@ -209,7 +226,11 @@ public class Game extends JPanel {
 		board[x][y] = p;
 	}
 
-	public void updateMhos() { // basic issues: need to update board design
+	/**
+	 * Updates all of the Mhos. Uses a basic AI to determine where they should move, based off of where 
+	 * the player, fences, and other Mhos are.
+	 */
+	public void updateMhos() {
 
 		for (int i = 0; i < 12; i++) {
 			if (Mhos[i].isAlive) {// Mho AI
@@ -325,7 +346,6 @@ public class Game extends JPanel {
 	}
 
 	/**
-	 * 
 	 * @param id
 	 *            the index of the Mho (Mhos are stored in an array)
 	 * @param dx
@@ -350,13 +370,20 @@ public class Game extends JPanel {
 			Mhos[id].die();
 
 	}
-
+	/**
+	 * Determines if the player is on the same Tile as the Mho m
+	 * @param m the Mho that the player might be in contact with
+	 * @return whether or not the player is on the same Tile as the Mho
+	 */
 	public boolean contact(Mho m) {
 		if (m.isAlive && m.y == p.y && m.x == p.x)
 			return true;
 		return false;
 	}
-	
+	/**
+	 * Sets the game state to the end game menu, either Won or Lost.
+	 * @param won Whether the player won the game or not.
+	 */
 	public void gameOver(boolean won){
 		if(won){
 			gameState = "Won";
@@ -367,15 +394,17 @@ public class Game extends JPanel {
 		b2.setText("Play Again");
 		b2.setVisible(true);
 	}
-
+	/**
+	 * Method used to display the game in the JFrame. First determines what the state of the game is based off of gameState,
+	 * then draws to the JFrame accordingly
+	 */
 	public void paintComponent(Graphics g) {
 		if (gameState.equals("StartMenu")) {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, 620, 640);
 			Image i;
 			try {
-				// image from http://homepage.cs.uiowa.edu/~jones/plato/
-				i = ImageIO.read(new File("images/hivolts1.png"));
+				i = ImageIO.read(new File("images/hivolts1.png")); // image from http://homepage.cs.uiowa.edu/~jones/plato/
 				g.drawImage(i, 0, 0, 620, 600, null);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -399,5 +428,4 @@ public class Game extends JPanel {
 			g.drawString("YOU WON!", 200, 200);
 		}
 	}
-
 }
